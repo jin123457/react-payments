@@ -13529,7 +13529,7 @@ function Title({ children, description }) {
 function Label({ id, children }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: id, children });
 }
-const Input$1 = newStyled.input`
+const StyledInput = newStyled.input`
   border: 1px solid ${(props) => props.isError ? "#f00" : "#acacac"};
   border-radius: 4px;
   padding: 8px;
@@ -13539,18 +13539,8 @@ const Input$1 = newStyled.input`
   }
   ${(props) => props.isError && `outline: #f00`};
 `;
-function Input({ placeholder, maxLength, value, onChange, isError }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Input$1,
-    {
-      type: "text",
-      placeholder,
-      maxLength,
-      value,
-      onChange,
-      isError
-    }
-  );
+function Input({ isError, ...inputAttributesProps }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(StyledInput, { ...inputAttributesProps, isError });
 }
 const Spacing$1 = newStyled.div`
   height: ${(props) => props.size}px;
@@ -13573,16 +13563,32 @@ const ERROR_MESSAGE = {
   validMonth: "유효한 월을 입력해주세요.",
   pastYear: "유효기간이 지난 것 같아요."
 };
+const DECIMAL_RADIX = 10;
+const MIN_VALID_MONTH = 1;
+const MAX_VALID_MONTH = 12;
+const ONLY_NUMBER_PATTERN = /^[0-9]*$/;
+const getCardType = (cardNumberFirst) => {
+  if (VISA_CARD_CONDITIONS.some((value) => cardNumberFirst.startsWith(value))) return "visa";
+  if (MASTER_CARD_CONDITIONS.some((value) => cardNumberFirst.startsWith(value))) return "master";
+  return "";
+};
+const getFirstErrorMessage = (cardNumberErrorMessage) => {
+  const visibleErrors = Object.values(cardNumberErrorMessage).filter(
+    (errorMassage) => errorMassage !== ""
+  );
+  if (visibleErrors.length === 0) return "";
+  return visibleErrors[0];
+};
 function CardNumber({
   cardNumber,
   setCardNumber,
   cardNumberErrorMessage,
   setCardNumberErrorMessage
 }) {
-  var _a;
+  const cardNumberInputSequences = ["first", "second", "third", "fourth"];
   const handleInputChange = ({ value, sequence }) => {
     setCardNumber({ ...cardNumber, [sequence]: value });
-    if (/^[0-9]*$/.test(value)) {
+    if (ONLY_NUMBER_PATTERN.test(value)) {
       setCardNumberErrorMessage({ ...cardNumberErrorMessage, [sequence]: "" });
       return;
     }
@@ -13593,62 +13599,24 @@ function CardNumber({
     /* @__PURE__ */ jsxRuntimeExports.jsx(Spacing, { size: 24 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { id: "card-number", children: "카드 번호" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Spacing, { size: 8 }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(InputWrapper$1, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Input,
-        {
-          placeholder: "1234",
-          maxLength: 4,
-          value: cardNumber.first,
-          onChange: (event) => handleInputChange({
-            value: event.target.value,
-            sequence: "first"
-          }),
-          isError: cardNumberErrorMessage.first !== ""
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Input,
-        {
-          placeholder: "1234",
-          maxLength: 4,
-          value: cardNumber.second,
-          onChange: (event) => handleInputChange({
-            value: event.target.value,
-            sequence: "second"
-          }),
-          isError: cardNumberErrorMessage.second !== ""
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Input,
-        {
-          placeholder: "1234",
-          maxLength: 4,
-          value: cardNumber.third,
-          onChange: (event) => handleInputChange({
-            value: event.target.value,
-            sequence: "third"
-          }),
-          isError: cardNumberErrorMessage.third !== ""
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Input,
-        {
-          placeholder: "1234",
-          maxLength: 4,
-          value: cardNumber.fourth,
-          onChange: (event) => handleInputChange({
-            value: event.target.value,
-            sequence: "fourth"
-          }),
-          isError: cardNumberErrorMessage.fourth !== ""
-        }
-      )
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(InputWrapper$1, { children: cardNumberInputSequences.map((sequence, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Input,
+      {
+        type: "text",
+        placeholder: "1234",
+        maxLength: 4,
+        id: index === 0 ? "card-number" : void 0,
+        value: cardNumber[sequence],
+        onChange: (event) => handleInputChange({
+          value: event.target.value,
+          sequence
+        }),
+        isError: cardNumberErrorMessage[sequence] !== ""
+      },
+      index
+    )) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Spacing, { size: 8 }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorMessage, { children: (_a = Object.entries(cardNumberErrorMessage).filter(([_, errorMassage]) => errorMassage !== "").at(0)) == null ? void 0 : _a[1] })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorMessage, { children: getFirstErrorMessage(cardNumberErrorMessage) })
   ] });
 }
 const InputWrapper = newStyled.div`
@@ -13661,20 +13629,20 @@ function CardExpirationDate({
   cardExpirationDateErrorMessage,
   setCardExpirationDateErrorMessage
 }) {
-  var _a;
+  const CardExpirationDateInputTypes = ["month", "year"];
   const handleInputChange = ({ value, dateType }) => {
     setCardExpirationDate({ ...cardExpirationDate, [dateType]: value });
     setCardExpirationDateErrorMessage({
       ...cardExpirationDateErrorMessage,
       [dateType]: ""
     });
-    if (!/^[0-9]*$/.test(value)) {
+    if (!ONLY_NUMBER_PATTERN.test(value)) {
       setCardExpirationDateErrorMessage({ ...cardExpirationDateErrorMessage, [dateType]: ERROR_MESSAGE.onlyNumber });
       return;
     }
-    const valueAsNumber = parseInt(value, 10);
+    const valueAsNumber = parseInt(value, DECIMAL_RADIX);
     if (dateType === "month") {
-      if (valueAsNumber < 0 || valueAsNumber > 12 || value === "00") {
+      if (valueAsNumber < MIN_VALID_MONTH || valueAsNumber > MAX_VALID_MONTH) {
         setCardExpirationDateErrorMessage({ ...cardExpirationDateErrorMessage, [dateType]: ERROR_MESSAGE.validMonth });
       }
       if (Number(cardExpirationDate.year) === Number(String((/* @__PURE__ */ new Date()).getFullYear()).slice(2)) && valueAsNumber < (/* @__PURE__ */ new Date()).getMonth() + 1) {
@@ -13704,36 +13672,24 @@ function CardExpirationDate({
     /* @__PURE__ */ jsxRuntimeExports.jsx(Spacing, { size: 24 }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Label, { id: "card-expiration-date", children: "유효기간" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Spacing, { size: 8 }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(InputWrapper, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Input,
-        {
-          placeholder: "MM",
-          maxLength: 2,
-          value: cardExpirationDate.month,
-          onChange: (event) => handleInputChange({
-            value: event.target.value,
-            dateType: "month"
-          }),
-          isError: cardExpirationDateErrorMessage.month !== ""
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Input,
-        {
-          placeholder: "YY",
-          maxLength: 2,
-          value: cardExpirationDate.year,
-          onChange: (event) => handleInputChange({
-            value: event.target.value,
-            dateType: "year"
-          }),
-          isError: cardExpirationDateErrorMessage.year !== ""
-        }
-      )
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(InputWrapper, { children: CardExpirationDateInputTypes.map((dateType, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Input,
+      {
+        type: "text",
+        placeholder: dateType === "month" ? "MM" : "YY",
+        maxLength: 2,
+        id: index === 0 ? "card-expiration-date" : void 0,
+        value: cardExpirationDate[dateType],
+        onChange: (event) => handleInputChange({
+          value: event.target.value,
+          dateType
+        }),
+        isError: cardExpirationDateErrorMessage[dateType] !== ""
+      },
+      index
+    )) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Spacing, { size: 8 }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorMessage, { children: (_a = Object.entries(cardExpirationDateErrorMessage).filter(([_, errorMassage]) => errorMassage !== "").at(0)) == null ? void 0 : _a[1] })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorMessage, { children: getFirstErrorMessage(cardExpirationDateErrorMessage) })
   ] });
 }
 function CardCVCNumber({
@@ -13744,7 +13700,7 @@ function CardCVCNumber({
 }) {
   const handleInputChange = (value) => {
     setCardCVCNumber(value);
-    if (/^[0-9]*$/.test(value)) {
+    if (ONLY_NUMBER_PATTERN.test(value)) {
       setCardCVCNumberErrorMessage("");
       return;
     }
@@ -13758,8 +13714,10 @@ function CardCVCNumber({
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       Input,
       {
+        type: "text",
         placeholder: "123",
         maxLength: 3,
+        id: "card-cvc-number",
         value: cardCVCNumber,
         onChange: (event) => handleInputChange(event.target.value),
         isError: cardCVCNumberErrorMessage !== ""
@@ -13889,12 +13847,7 @@ function CardPreview({ cardType, cardNumber, cardExpirationDate }) {
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: `${cardExpirationDate.month}${cardExpirationDate.year && " / "}${cardExpirationDate.year}` }) })
   ] });
 }
-const getCardType = (cardNumberFirst) => {
-  if (VISA_CARD_CONDITIONS.some((value) => cardNumberFirst.startsWith(value))) return "visa";
-  if (MASTER_CARD_CONDITIONS.some((value) => cardNumberFirst.startsWith(value))) return "master";
-  return "";
-};
-function App() {
+function AddCard() {
   const [cardNumber, setCardNumber] = reactExports.useState({
     first: "",
     second: "",
@@ -13951,6 +13904,9 @@ function App() {
       )
     ] })
   ] });
+}
+function App() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(AddCard, {}) });
 }
 ReactDOM.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
