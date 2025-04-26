@@ -14277,7 +14277,7 @@ function Dropdown({
         ]
       }
     ),
-    /* @__PURE__ */ jsx$1(DropdownItemList, { isOpen, children: dropdownList.map((item) => /* @__PURE__ */ jsx$1(DropdownItem, { tabIndex: isOpen ? 0 : -1, children: /* @__PURE__ */ jsx$1(DropdownItemButton, { type: "button", onClick: () => handleDropdownChange(item), children: item }) }, item)) })
+    /* @__PURE__ */ jsx$1(DropdownItemList, { isOpen, children: dropdownList.map((item) => /* @__PURE__ */ jsx$1(DropdownItem, { children: /* @__PURE__ */ jsx$1(DropdownItemButton, { type: "button", onClick: () => handleDropdownChange(item), tabIndex: isOpen ? 0 : -1, children: item }) }, item)) })
   ] });
 }
 const CARD_BRAND_LIST = [
