@@ -14277,7 +14277,7 @@ function Dropdown({
         ]
       }
     ),
-    /* @__PURE__ */ jsx$1(DropdownItemList, { isOpen, children: dropdownList.map((item) => /* @__PURE__ */ jsx$1(DropdownItem, { children: /* @__PURE__ */ jsx$1(DropdownItemButton, { type: "button", onClick: () => handleDropdownChange(item), children: item }) }, item)) })
+    /* @__PURE__ */ jsx$1(DropdownItemList, { isOpen, children: dropdownList.map((item) => /* @__PURE__ */ jsx$1(DropdownItem, { tabIndex: isOpen ? 0 : -1, children: /* @__PURE__ */ jsx$1(DropdownItemButton, { type: "button", onClick: () => handleDropdownChange(item), children: item }) }, item)) })
   ] });
 }
 const CARD_BRAND_LIST = [
@@ -16741,7 +16741,7 @@ function AddCardForm({
     {
       onSubmit: (e) => {
         e.preventDefault();
-        navigate("/react-payments/complete", {
+        navigate("/complete", {
           state: {
             cardNumber,
             cardBrandTypeState
@@ -17051,7 +17051,7 @@ function AddCardComplete() {
   const { cardNumber, cardBrandTypeState } = { ...location.state };
   const navigate = useNavigate();
   const redirectToHome = () => {
-    navigate("/react-payments");
+    navigate("/");
   };
   reactExports.useEffect(() => {
     if (!location.state) {
@@ -17098,7 +17098,7 @@ const Description = newStyled.span`
 function NotFound() {
   const navigate = useNavigate();
   const redirectToHome = () => {
-    navigate("/react-payments");
+    navigate("/");
   };
   return /* @__PURE__ */ jsxs(Wrapper, { children: [
     /* @__PURE__ */ jsx$1(Title, { children: "⚠️ 404 NOT FOUND ⚠️" }),
@@ -17108,8 +17108,8 @@ function NotFound() {
 }
 function App() {
   return /* @__PURE__ */ jsxs(Routes, { children: [
-    /* @__PURE__ */ jsx$1(Route, { path: "/react-payments/complete", element: /* @__PURE__ */ jsx$1(AddCardComplete, {}) }),
-    /* @__PURE__ */ jsx$1(Route, { path: "/react-payments", element: /* @__PURE__ */ jsx$1(AddCard, {}) }),
+    /* @__PURE__ */ jsx$1(Route, { path: "/complete", element: /* @__PURE__ */ jsx$1(AddCardComplete, {}) }),
+    /* @__PURE__ */ jsx$1(Route, { path: "/", element: /* @__PURE__ */ jsx$1(AddCard, {}) }),
     /* @__PURE__ */ jsx$1(Route, { path: "*", element: /* @__PURE__ */ jsx$1(NotFound, {}) })
   ] });
 }
@@ -17264,7 +17264,7 @@ const GlobalStyle = () => {
   return /* @__PURE__ */ jsx$1(Global, { styles: globalStyles });
 };
 ReactDOM.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsx$1(React.StrictMode, { children: /* @__PURE__ */ jsxs(BrowserRouter, { children: [
+  /* @__PURE__ */ jsx$1(React.StrictMode, { children: /* @__PURE__ */ jsxs(BrowserRouter, { basename: "/react-payments", children: [
     /* @__PURE__ */ jsx$1(GlobalStyle, {}),
     /* @__PURE__ */ jsx$1(App, {})
   ] }) })
