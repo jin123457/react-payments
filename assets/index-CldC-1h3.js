@@ -16741,7 +16741,7 @@ function AddCardForm({
     {
       onSubmit: (e) => {
         e.preventDefault();
-        navigate("/complete", {
+        navigate("/react-payments/complete", {
           state: {
             cardNumber,
             cardBrandTypeState
@@ -17051,7 +17051,7 @@ function AddCardComplete() {
   const { cardNumber, cardBrandTypeState } = { ...location.state };
   const navigate = useNavigate();
   const redirectToHome = () => {
-    navigate("/");
+    navigate("/react-payments");
   };
   reactExports.useEffect(() => {
     if (!location.state) {
@@ -17098,7 +17098,7 @@ const Description = newStyled.span`
 function NotFound() {
   const navigate = useNavigate();
   const redirectToHome = () => {
-    navigate("/");
+    navigate("/react-payments");
   };
   return /* @__PURE__ */ jsxs(Wrapper, { children: [
     /* @__PURE__ */ jsx$1(Title, { children: "⚠️ 404 NOT FOUND ⚠️" }),
