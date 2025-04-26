@@ -13820,7 +13820,7 @@ var newStyled = createStyled.bind(null);
 tags.forEach(function(tagName) {
   newStyled[tagName] = newStyled(tagName);
 });
-const Wrapper$1 = newStyled.div`
+const Wrapper$2 = newStyled.div`
   width: 480px;
   height: 100vh;
   margin: 0 auto;
@@ -14067,19 +14067,19 @@ const TitleBox = newStyled.div`
   align-items: flex-start;
   gap: 4px;
 `;
-const Title$1 = newStyled.h1`
+const Title$2 = newStyled.h1`
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.5rem;
 `;
-const Description = newStyled.p`
+const Description$1 = newStyled.p`
   color: #8b95a1;
   font-size: 0.8rem;
 `;
-function Title({ children, description }) {
+function Title$1({ children, description }) {
   return /* @__PURE__ */ jsxs(TitleBox, { children: [
-    /* @__PURE__ */ jsx$1(Title$1, { children }),
-    description && /* @__PURE__ */ jsx$1(Description, { children: description })
+    /* @__PURE__ */ jsx$1(Title$2, { children }),
+    description && /* @__PURE__ */ jsx$1(Description$1, { children: description })
   ] });
 }
 function Label({ id, children }) {
@@ -14121,7 +14121,7 @@ function CardNumber({
   handleCardNumberInputChange
 }) {
   return /* @__PURE__ */ jsxs("div", { children: [
-    /* @__PURE__ */ jsx$1(Title, { description: "본인 명의의 카드만 결제 가능합니다.", children: "결제할 카드 번호를 입력해 주세요" }),
+    /* @__PURE__ */ jsx$1(Title$1, { description: "본인 명의의 카드만 결제 가능합니다.", children: "결제할 카드 번호를 입력해 주세요" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 24 }),
     /* @__PURE__ */ jsx$1(Label, { id: "card-number", children: "카드 번호" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 8 }),
@@ -14292,7 +14292,7 @@ const CARD_BRAND_LIST = [
 ];
 function CardBrand({ cardBrandTypeState, handleDropdownChange }) {
   return /* @__PURE__ */ jsxs("div", { children: [
-    /* @__PURE__ */ jsx$1(Title, { description: "현재 국내 카드사만 가능합니다.", children: "카드사를 선택해 주세요" }),
+    /* @__PURE__ */ jsx$1(Title$1, { description: "현재 국내 카드사만 가능합니다.", children: "카드사를 선택해 주세요" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 24 }),
     /* @__PURE__ */ jsx$1(
       Dropdown,
@@ -14318,7 +14318,7 @@ function CardExpirationDate({
 }) {
   const CardExpirationDateInputTypes = ["month", "year"];
   return /* @__PURE__ */ jsxs("div", { children: [
-    /* @__PURE__ */ jsx$1(Title, { description: "월/년도(MMYY)를 순서대로 입력해 주세요.", children: "카드 유효기간을 입력해 주세요" }),
+    /* @__PURE__ */ jsx$1(Title$1, { description: "월/년도(MMYY)를 순서대로 입력해 주세요.", children: "카드 유효기간을 입력해 주세요" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 24 }),
     /* @__PURE__ */ jsx$1(Label, { id: "card-expiration-date", children: "유효기간" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 8 }),
@@ -14355,7 +14355,7 @@ function CardCVCNumber({
   handleCardCVCNumberInputChange
 }) {
   return /* @__PURE__ */ jsxs("div", { children: [
-    /* @__PURE__ */ jsx$1(Title, { children: "CVC 번호를 입력해 주세요" }),
+    /* @__PURE__ */ jsx$1(Title$1, { children: "CVC 번호를 입력해 주세요" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 24 }),
     /* @__PURE__ */ jsx$1(Label, { id: "card-cvc-number", children: "CVC" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 8 }),
@@ -14382,7 +14382,7 @@ function CardPasswordNumber({
   handleCardPasswordInputChange
 }) {
   return /* @__PURE__ */ jsxs("div", { children: [
-    /* @__PURE__ */ jsx$1(Title, { description: "앞의 2자리를 입력해주세요", children: "비밀번호를 입력해 주세요" }),
+    /* @__PURE__ */ jsx$1(Title$1, { description: "앞의 2자리를 입력해주세요", children: "비밀번호를 입력해 주세요" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 24 }),
     /* @__PURE__ */ jsx$1(Label, { id: "card-password", children: "비밀번호" }),
     /* @__PURE__ */ jsx$1(Spacing, { size: 8 }),
@@ -16972,7 +16972,7 @@ const useControlledAddCardState = () => {
 };
 function AddCard() {
   const addFormState = useControlledAddCardState();
-  return /* @__PURE__ */ jsxs(Wrapper$1, { children: [
+  return /* @__PURE__ */ jsxs(Wrapper$2, { children: [
     /* @__PURE__ */ jsx$1(CardPreviewWrapper$1, { children: /* @__PURE__ */ jsx$1(
       CardPreview,
       {
@@ -16985,7 +16985,7 @@ function AddCard() {
     /* @__PURE__ */ jsx$1(AddCardForm, { addFormState })
   ] });
 }
-const Wrapper = newStyled.div`
+const Wrapper$1 = newStyled.div`
   width: 480px;
   height: 100vh;
   margin: 0 auto;
@@ -17058,7 +17058,7 @@ function AddCardComplete() {
       redirectToHome();
     }
   }, []);
-  return /* @__PURE__ */ jsxs(Wrapper, { children: [
+  return /* @__PURE__ */ jsxs(Wrapper$1, { children: [
     /* @__PURE__ */ jsx$1(CompleteIconCircle, { children: /* @__PURE__ */ jsx$1(CompleteIcon, {}) }),
     /* @__PURE__ */ jsx$1(CompleteCardInfoBox, { children: /* @__PURE__ */ jsxs(CompleteCardInfoText, { children: [
       cardNumber == null ? void 0 : cardNumber.first,
@@ -17070,10 +17070,47 @@ function AddCardComplete() {
     /* @__PURE__ */ jsx$1(Button, { type: "button", onClick: redirectToHome, borderRadius: "8px", children: "확인" })
   ] });
 }
+const Wrapper = newStyled.div`
+  width: 480px;
+  height: 100vh;
+  margin: 0 auto;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  padding: 72px 32px 60px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const Title = newStyled.p`
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 32px;
+`;
+const Description = newStyled.span`
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 32px;
+  color: #aaa;
+`;
+function NotFound() {
+  const navigate = useNavigate();
+  const redirectToHome = () => {
+    navigate("/");
+  };
+  return /* @__PURE__ */ jsxs(Wrapper, { children: [
+    /* @__PURE__ */ jsx$1(Title, { children: "⚠️ 404 NOT FOUND ⚠️" }),
+    /* @__PURE__ */ jsx$1(Description, { children: "없는 페이지입니다." }),
+    /* @__PURE__ */ jsx$1(Button, { type: "button", onClick: redirectToHome, borderRadius: "8px", children: "💳 카드 등록하러 가기" })
+  ] });
+}
 function App() {
   return /* @__PURE__ */ jsxs(Routes, { children: [
+    /* @__PURE__ */ jsx$1(Route, { path: "complete", element: /* @__PURE__ */ jsx$1(AddCardComplete, {}) }),
     /* @__PURE__ */ jsx$1(Route, { index: true, element: /* @__PURE__ */ jsx$1(AddCard, {}) }),
-    /* @__PURE__ */ jsx$1(Route, { path: "complete", element: /* @__PURE__ */ jsx$1(AddCardComplete, {}) })
+    /* @__PURE__ */ jsx$1(Route, { path: "*", element: /* @__PURE__ */ jsx$1(NotFound, {}) })
   ] });
 }
 const globalStyles = css`
