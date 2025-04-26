@@ -17108,8 +17108,8 @@ function NotFound() {
 }
 function App() {
   return /* @__PURE__ */ jsxs(Routes, { children: [
-    /* @__PURE__ */ jsx$1(Route, { path: "complete", element: /* @__PURE__ */ jsx$1(AddCardComplete, {}) }),
-    /* @__PURE__ */ jsx$1(Route, { index: true, element: /* @__PURE__ */ jsx$1(AddCard, {}) }),
+    /* @__PURE__ */ jsx$1(Route, { path: "/react-payments/complete", element: /* @__PURE__ */ jsx$1(AddCardComplete, {}) }),
+    /* @__PURE__ */ jsx$1(Route, { path: "/react-payments", element: /* @__PURE__ */ jsx$1(AddCard, {}) }),
     /* @__PURE__ */ jsx$1(Route, { path: "*", element: /* @__PURE__ */ jsx$1(NotFound, {}) })
   ] });
 }
